@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Office</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="zoom_in">+</string>
+    <string name="zoom_out">-</string>
+    <string name="goto_top">Top</string>
+    <string name="goto_bottom">Bottom</string>
+    <string name="goto_next">Next</string>
+    <string name="goto_prev">Prev</string>
+    <string name="goto_ok">OK</string>
+    <string name="copy_text">Copy</string>
+    <string name="can_not_open_file">不能打开此文件</string>
+</resources>

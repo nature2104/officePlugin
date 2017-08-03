@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="officePlugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>OfficePlugin</name>
+    <js-module name="OfficePlugin" src="www/OfficePlugin.js">
+        <clobbers target="cordova.plugins.OfficePlugin" />
+    </js-module>
+
+    <platform name="android">
+        <source-file src="src/android/OfficePlugin.java" target-dir="src/hand"/>
+        <source-file src="src/android/ColorfulProgressBar.java" target-dir="src/hand"/>
+        <source-file src="src/android/PermissionHelper.java" target-dir="src/hand"/>
+        <source-file src="src/android/office/BaseDocumentActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/PDFActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/SpreadsheetActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/PresentationActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/WordActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/ImageActivity.java" target-dir="src/office"/>
+        <source-file src="src/android/office/FileCallback.java" target-dir="src/office"/>
+        <source-file src="src/android/office/FileConvert.java" target-dir="src/office"/>
+        <source-file src="src/android/office/HttpUtils.java" target-dir="src/office"/>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="OfficePlugin">
+                <param name="android-package" value="hand.OfficePlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/libs/okgo-2.0.0.jar" target-dir="libs" />
+        <!-- <source-file src="src/android/libs/android-support-v4.jar" target-dir="libs" /> -->
+        <source-file src="src/android/libs/okhttp-3.4.1.jar" target-dir="libs" />
+        <source-file src="src/android/libs/okio-1.9.0.jar" target-dir="libs" />
+        <source-file src="src/android/libs/OfficeSDK.jar" target-dir="libs" />
+        <source-file src="src/android/libs/arm64-v8a/libpdf.so" target-dir="libs/arm64-v8a" />
+        <source-file src="src/android/libs/armeabi-v7a/libpdf.so" target-dir="libs/armeabi-v7a" />
+
+        <source-file src="src/android/menu/main.xml" target-dir="res/menu" />
+        <source-file src="src/android/drawable/excel_selected_sheet.png" target-dir="res/drawable" />
+        <source-file src="src/android/drawable/excel_sheet_bar_bg.xml" target-dir="res/drawable" />
+        <source-file src="src/android/drawable/excel_unselected_sheet.png" target-dir="res/drawable" />
+
+        <source-file src="src/android/layout/content_activity.xml" target-dir="res/layout" />
+        <source-file src="src/android/layout/excel_content.xml" target-dir="res/layout" />
+        <source-file src="src/android/layout/layout_image.xml" target-dir="res/layout" />
+        <source-file src="src/android/layout/item_number_progress.xml" target-dir="res/layout" />
+        <config-file target="res/values/strings.xml" parent="/resources">
+          <string name="action_settings">Settings</string>
+          <string name="zoom_in">+</string>
+          <string name="zoom_out">-</string>
+          <string name="goto_top">Top</string>
+          <string name="goto_bottom">Bottom</string>
+          <string name="goto_next">Next</string>
+          <string name="goto_prev">Prev</string>
+          <string name="goto_ok">OK</string>
+          <string name="copy_text">Copy</string>
+          <string name="share_photo">分享照片</string>
+          <string name="can_not_open_file">不能打开此文件</string>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        	<activity
+                android:name="office.WordActivity"
+                android:configChanges="screenSize|mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+                android:theme="@android:style/Theme.DeviceDefault.Light">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <data android:mimeType="application/msword"/>
+                        <data android:mimeType="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+                        <data android:mimeType="text/plain"/>
+                    </intent-filter>
+            </activity>
+            <activity
+                android:name="office.PresentationActivity"
+                android:configChanges="screenSize|mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+                android:theme="@android:style/Theme.DeviceDefault.Light" >
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <data android:mimeType="application/vnd.ms-powerpoint"/>
+                        <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation"/>
+                    </intent-filter>
+            </activity>
+            <activity
+                android:name="office.SpreadsheetActivity"
+                android:configChanges="screenSize|mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+                android:theme="@android:style/Theme.DeviceDefault.Light" >
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <data android:mimeType="application/vnd.ms-excel"/>
+                        <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+                    </intent-filter>
+
+            </activity>
+            <activity
+                android:name="office.PDFActivity"
+                android:configChanges="screenSize|mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+                android:theme="@android:style/Theme.DeviceDefault.Light">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <data android:mimeType="application/pdf"/>
+                    </intent-filter>
+            </activity>
+
+            <activity
+                android:name="office.ImageActivity"
+                android:configChanges="screenSize|mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar">
+                    <intent-filter>
+                        <action android:name="android.intent.action.VIEW"/>
+                        <category android:name="android.intent.category.DEFAULT"/>
+                        <data android:mimeType="image/jpeg"/>
+                        <data android:mimeType="image/png"/>
+                    </intent-filter>
+            </activity>
+       
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    	 <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+         <!-- network permissions -->
+         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+         <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+         <uses-permission android:name="android.permission.INTERNET"/>
+        
+        </config-file>
+        <!-- <dependency id="cordova-plugin-crosswalk-webview" version="2.1.0"/> -->
+        <framework src="com.android.support:support-v4:23.1.1" />
+    </platform>
+</plugin>
